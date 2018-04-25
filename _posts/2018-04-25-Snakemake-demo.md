@@ -3,8 +3,6 @@ layout: post
 ---
 
 
-# Snakemake: processing lots of files
-
 A friend and colleague learned how to process lots of files on grid engine and now is in need of a more portable solution. Snakemake may not be the best option in all cases, but if you already know some python, it's worth considering.
 
 ## Why snakemake
@@ -61,8 +59,6 @@ genomes:
     Saccharomyces_arboricola:
         ftp://ftp.ncbi.nih.gov/genomes/refseq/fungi/Saccharomyces_arboricola/all_assembly_versions/suppressed/GCF_000292725.1_SacArb1.0/GCF_000292725.1_SacArb1.0_genomic.fna.gz
 ```
-
-    Overwriting genomes.yaml
 
 
 ## The Makefile
@@ -147,10 +143,6 @@ rule download_genome:
         "curl -s {params.url} {params.pipe} > {output}"
 
 ```
-
-    Overwriting example1.snake
-
-
 ### Dependencies
 We'll use conda to make sure eveything we need is installed
 
@@ -165,19 +157,11 @@ dependencies:
     - prodigal
 ```
 
-    Overwriting conda.yaml
-
-
 
 ```bash
 %%bash
 conda env create -p env -f conda.yaml
 ```
-
-    Using Anaconda API: https://api.anaconda.org
-    
-    CondaValueError: prefix already exists: /global/projectb/scratch/jmeppley/snakemake-demo/env
-    
 
 
 ### Run
@@ -329,32 +313,14 @@ We can run a different workflow off the downloaded genomes.
 
 
 ```python
-!ls
+!ls *.fna
 ```
 
-    Caldimonas_manganoxidans.faa
-    Caldimonas_manganoxidans.faa.log
     Caldimonas_manganoxidans.fna
-    Candidatus_Pelagibacter_sp._HIMB1321.faa
-    Candidatus_Pelagibacter_sp._HIMB1321.faa.log
     Candidatus_Pelagibacter_sp._HIMB1321.fna
-    Prochlorococcus_sp._MIT_0701.faa
-    Prochlorococcus_sp._MIT_0701.faa.log
     Prochlorococcus_sp._MIT_0701.fna
-    Saccharomyces_arboricola.faa
-    Saccharomyces_arboricola.faa.log
     Saccharomyces_arboricola.fna
-    all_genes.faa
-    conda.yaml
-    cyanophage_p_rsm1_uid198436.faa
-    cyanophage_p_rsm1_uid198436.faa.log
     cyanophage_p_rsm1_uid198436.fna
-    env
-    example1.snake
-    example2.snake
-    example3.snake
-    genomes.yaml
-
 
 
 ```python
@@ -377,9 +343,6 @@ rule count_contigs:
     output: "{genome}.contig_count"
     shell: "grep -c '^>' {input} > {output}"
 ```
-
-    Overwriting example2.snake
-
 
 
 ```bash
@@ -468,11 +431,3 @@ snakemake -s example2.snake
     6 of 6 steps (100%) done
     Complete log: /global/projectb/scratch/jmeppley/snakemake-demo/.snakemake/log/2018-04-25T102130.106210.snakemake.log
 
-
-### Cleanup
-Let's clear the outputs so we can do it again, and commit our changes to the repo
-
-
-```python
-!rm *.fna *.faa *.log *.contig_count
-```

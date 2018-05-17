@@ -25,17 +25,6 @@ It uses the built in python language tokenizer with a few decalrations added to 
 
 You have large number of files that you want to do the same thing to. This "thing" can be one command, or it can be a whole workflow.
 
-
-
-```python
-workdir = '~/pjb/snakemake-demo'
-!mkdir -p {workdir}
-%cd {workdir}
-```
-
-    /global/projectb/scratch/jmeppley/snakemake-demo
-
-
 ### The Data
 Let's grab some genomes from NCBI
 
@@ -45,7 +34,7 @@ Snakemake preferes to read in configuration from JSON and YAML files. Either wor
 In this case, we'll name some genome URLs from NCBI
 
 
-```python
+```yaml
 %%writefile genomes.yaml
 genomes:
     cyanophage_p_rsm1_uid198436:
@@ -147,7 +136,7 @@ rule download_genome:
 We'll use conda to make sure eveything we need is installed
 
 
-```python
+```yaml
 %%writefile conda.yaml
 channels:
     - bioconda
